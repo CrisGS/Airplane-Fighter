@@ -1,0 +1,64 @@
+h1 {
+    text-align: center;
+    color: antiquewhite;
+}
+
+body {
+    background: rgb(14, 15, 44);
+}
+
+.timer {
+    display: flex;
+    width: 100px;
+    color: white;
+    height: fit-content;
+    margin: 5px auto 5px 0;
+    justify-content: space-between;
+}
+
+.btn {
+    display: flex;
+    width: fit-content;
+    margin: auto auto auto auto;
+}
+
+.game {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 600px;
+    width: fit-content;
+    background: url(background1.jpg) center no-repeat;
+    background-size: cover;
+    border-radius: 10px;
+    box-shadow: 15px 15px 30px rgb(24, 25, 60),
+             -15px -15px 30px rgb(24, 25, 60),
+             15px 15px 30px rgb(24, 25, 60),
+             -15px -15px 30px rgb(24, 25, 60);
+}
+
+.buttons {
+    display: inline-flex;
+    justify-content: space-between;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.tableGame {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    border: 2px solid black;
+    width: 300px;
+    height: 500px;
+}
+
+.airplane {
+    display: flex;
+    border: 2px solid black;
+    width: 80px;
+    height: 70px;
+    background: url(airplane.png) center no-repeat;
+    background-size:cover;
+    margin-bottom: 30px;
+}
