@@ -1,11 +1,24 @@
 let seconds = 0;
 let myInterval;
+let stepMove = 10;
 let airplanePosition = document.getElementById("table-game");
 airplanePosition.style.justifyContent = "center";
+let asteroidPos = document.getElementById("asteroid");
+asteroidPos.style.marginBottom = '400px'
+
+
 
 function startGame() {
   timer();
+  setInterval(asteroidFall, 10);
   document.onkeydown = move;
+}
+
+
+
+function asteroidFall() {
+  asteroidPos.style.marginBottom = parseInt(asteroidPos.style.marginBottom) - 1 + 'px';
+  console.log(document.getElementById("asteroid").style.marginBottom);
 }
 
 function move(e) {
