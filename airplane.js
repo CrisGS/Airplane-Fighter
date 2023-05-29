@@ -1,10 +1,10 @@
 let seconds = 0;
 let myInterval;
 let stepMove = 10;
-let airplanePosition = document.getElementById("table-game");
-airplanePosition.style.justifyContent = "center";
+let airplanePosition = document.getElementById("airplane");
+airplanePosition.style.left = "100px";
 let asteroidPos = document.getElementById("asteroid");
-asteroidPos.style.marginBottom = '400px'
+asteroidPos.style.top = '10px'
 
 
 
@@ -17,23 +17,17 @@ function startGame() {
 
 
 function asteroidFall() {
-  asteroidPos.style.marginBottom = parseInt(asteroidPos.style.marginBottom) - 1 + 'px';
-  console.log(document.getElementById("asteroid").style.marginBottom);
+  if (parseInt(asteroidPos.style.top) < 510) {
+    asteroidPos.style.top = parseInt(asteroidPos.style.top) + 1 + 'px';
+  }
+  console.log(document.getElementById("asteroid").style.top);
 }
 
 function move(e) {
-  if (e.keyCode == 37) {
-    if (airplanePosition.style.justifyContent == "flex-end") {
-      airplanePosition.style.justifyContent = "center";
-    } else if (airplanePosition.style.justifyContent == "center") {
-      airplanePosition.style.justifyContent = "flex-start";
-    }
-  } else if (e.keyCode == 39) {
-    if (airplanePosition.style.justifyContent == "flex-start") {
-      airplanePosition.style.justifyContent = "center";
-    } else if (airplanePosition.style.justifyContent == "center") {
-      airplanePosition.style.justifyContent = "flex-end";
-    }
+  if (e.keyCode == 37 && parseInt(airplanePosition.style.left) > 0) {
+    airplanePosition.style.left = parseInt(airplanePosition.style.left) - 100 + 'px';
+  } else if (e.keyCode == 39 && parseInt(airplanePosition.style.left) < 200) {
+    airplanePosition.style.left = parseInt(airplanePosition.style.left) + 100 + 'px';
   }
 }
 
