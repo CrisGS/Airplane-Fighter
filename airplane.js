@@ -1,26 +1,55 @@
-let seconds = 0;
-let myInterval;
-let stepMove = 10;
-let airplanePosition = document.getElementById("airplane");
-airplanePosition.style.left = "100px";
-let asteroidPos = document.getElementById("asteroid");
-asteroidPos.style.top = '10px'
-
-
+let seconds = 0, stepMove = 100, asteroidId = 0;
+let horizontalPositions = [10, 110, 210], airplanePosition, myInterval, fallingInterval, generateInterval;
 
 function startGame() {
   timer();
-  setInterval(asteroidFall, 10);
+  generateAirplane();
+  generateInterval = setInterval(generateAsteroid, 2000);
   document.onkeydown = move;
 }
 
+function generateAirplane() {
+  let airplane = document.createElement('div');
+  airplane.id = 'airplane';
+  airplane.classList.add('airplane');
+  document.getElementById("table-game").appendChild(airplane);
+  airplanePosition = document.getElementById("airplane");
+  airplanePosition.style.left = "100px";
+}
 
+function generateAsteroid() {
+  asteroid = document.createElement('img');
+  asteroid.src = 'asteroid.png';
+  asteroid.classList.add('asteroid');
+  asteroid.id = asteroidId;
+  asteroid.style.left = horizontalPositions[Math.floor(Math.random() * 3)] + 'px';
+  asteroid.style.top = '-150px';
+  document.getElementById("table-game").appendChild(asteroid);
+  asteroid.onload = asteroidFall(asteroidId);
+  ++asteroidId;
+}
 
-function asteroidFall() {
-  if (parseInt(asteroidPos.style.top) < 510) {
-    asteroidPos.style.top = parseInt(asteroidPos.style.top) + 1 + 'px';
+function checkColision(x) {
+  let asteroidVerticalPosition = parseInt(document.getElementById(x).style.top);
+  if (asteroidVerticalPosition === 318) {
+    if (parseInt(document.getElementById('airplane').style.left) === parseInt(document.getElementById(x).style.left) - 10) {
+      clearInterval(fallingInterval);
+      clearInterval(generateInterval);
+      clearInterval(myInterval);
+      document.getElementById("header").innerText = "Game Over!";
+    }
   }
-  console.log(document.getElementById("asteroid").style.top);
+}
+
+function asteroidFall(imgId) {
+  fallingInterval = setInterval(() => {
+    document.getElementById(imgId).style.top = parseInt(document.getElementById(imgId).style.top) + 2 + 'px';
+    checkColision(imgId);
+    if (parseInt(document.getElementById(imgId).style.top) > 500) {
+      document.getElementById(imgId).remove();
+      clearInterval(fallingInterval);
+    }
+  }, 5);
 }
 
 function move(e) {

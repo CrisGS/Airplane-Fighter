@@ -6,8 +6,10 @@
 
 h1 {
   text-align: center;
+  margin: 20px;
   color: antiquewhite;
   font-family: arcade;
+  font-size:x-large;
 }
 
 body {
@@ -30,13 +32,17 @@ body {
   margin: auto auto auto auto;
 }
 
+button.pointer {
+  cursor: pointer;
+}
+
 .game {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 600px;
   width: fit-content;
-  background: url(background1.jpg) center no-repeat;
+  background: url(background.jpg) center no-repeat;
   background-size: cover;
   border-radius: 10px;
   box-shadow: 15px 15px 30px rgb(24, 25, 60),
@@ -44,17 +50,6 @@ body {
             15px 15px 30px rgb(24, 25, 60),
             -15px -15px 30px rgb(24, 25, 60);
 }
-
-@keyframes slide {
-  0% {
-    transform: translate(0);
-  }
-  100% {
-    transform: translate(-3500px); /* The image width */
-  }
-}
-
-
 
 .buttons {
   display: inline-flex;
@@ -64,6 +59,7 @@ body {
 }
 
 .tableGame {
+  position: relative;
   border: 2px solid white;
   width: 300px;
   height: 500px;
@@ -73,19 +69,19 @@ body {
 .airplane {
   position: relative;
   left: 100px;
-  top: 330px;
+  top: 390px;
   width: 80px;
   height: 70px;
   background: url(airplane.png) center no-repeat;
   background-size:cover;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .asteroid {
-  position: relative;
+  position:absolute;
+  overflow: auto;
   width: 80px;
   height: 80px;
-  background: url(98lh_bv8k_210607-removebg-preview.png) center no-repeat;
+  background: center no-repeat;
   background-size:cover;
-  animation-direction: reverse;
 }
