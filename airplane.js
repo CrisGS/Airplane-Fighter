@@ -1,11 +1,14 @@
-let seconds = 0, stepMove = 100, asteroidId = 0;
+let seconds = 0, stepMove = 100, asteroidId = 0, gameOver = false, alreadyPressed = false;
 let horizontalPositions = [10, 110, 210], airplanePosition, myInterval, fallingInterval, generateInterval;
 
 function startGame() {
-  timer();
-  generateAirplane();
-  generateInterval = setInterval(generateAsteroid, 2000);
-  document.onkeydown = move;
+  if (gameOver === false && alreadyPressed === false) {
+    timer();
+    generateAirplane();
+    generateInterval = setInterval(generateAsteroid, 1500);
+    document.onkeydown = move;
+    alreadyPressed = true;
+  }
 }
 
 function generateAirplane() {
@@ -29,6 +32,21 @@ function generateAsteroid() {
   ++asteroidId;
 }
 
+function displayScore() {
+  let divElement = document.createElement('div');
+  divElement.classList.add('messageContainer');
+  let gameOver = document.createElement('img');
+  gameOver.src = 'Game over.png';
+  gameOver.classList.add('gameOver');
+  let score = document.createElement('span');
+  score.classList.add('score');
+  score.id = 'score';
+  score.innerText = "Your score is: " + seconds;
+  divElement.appendChild(gameOver);
+  divElement.appendChild(score);
+  document.getElementById("table-game").appendChild(divElement);
+}
+
 function checkColision(x) {
   let asteroidVerticalPosition = parseInt(document.getElementById(x).style.top);
   if (asteroidVerticalPosition === 318) {
@@ -36,7 +54,8 @@ function checkColision(x) {
       clearInterval(fallingInterval);
       clearInterval(generateInterval);
       clearInterval(myInterval);
-      document.getElementById("header").innerText = "Game Over!";
+      displayScore();
+      gameOver = true;
     }
   }
 }
@@ -53,22 +72,25 @@ function asteroidFall(imgId) {
 }
 
 function move(e) {
-  if (e.keyCode == 37 && parseInt(airplanePosition.style.left) > 0) {
-    airplanePosition.style.left = parseInt(airplanePosition.style.left) - 100 + 'px';
-  } else if (e.keyCode == 39 && parseInt(airplanePosition.style.left) < 200) {
-    airplanePosition.style.left = parseInt(airplanePosition.style.left) + 100 + 'px';
+  if (gameOver === false) {
+    if (e.keyCode == 37 && parseInt(airplanePosition.style.left) > 0) {
+      airplanePosition.style.left = parseInt(airplanePosition.style.left) - 100 + 'px';
+    } else if (e.keyCode == 39 && parseInt(airplanePosition.style.left) < 200) {
+      airplanePosition.style.left = parseInt(airplanePosition.style.left) + 100 + 'px';
+    }
   }
 }
 
 function timer() {
+  let elapsedTime;
   myInterval = setInterval(() => {
     ++seconds;
     if (seconds < 10) {
-      seconds = '00' + seconds;
+      elapsedTime = '00' + seconds;
     } else if (seconds < 100) {
-      seconds = '0' + seconds;
+      elapsedTime = '0' + seconds;
     }
-    document.getElementById('time').innerText = seconds;
+    document.getElementById('time').innerText = elapsedTime;
   }, 1000);
 }
 
