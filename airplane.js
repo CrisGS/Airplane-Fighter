@@ -5,7 +5,7 @@ function startGame() {
   if (gameOver === false && alreadyPressed === false) {
     timer();
     generateAirplane();
-    generateInterval = setInterval(generateAsteroid, 1500);
+    generateInterval = setInterval(generateAsteroid, 1000);
     document.onkeydown = move;
     alreadyPressed = true;
   }
@@ -64,9 +64,8 @@ function asteroidFall(imgId) {
   fallingInterval = setInterval(() => {
     document.getElementById(imgId).style.top = parseInt(document.getElementById(imgId).style.top) + 2 + 'px';
     checkColision(imgId);
-    if (parseInt(document.getElementById(imgId).style.top) > 500) {
+    if (parseInt(document.getElementById(imgId).style.top) > 450) {
       document.getElementById(imgId).remove();
-      clearInterval(fallingInterval);
     }
   }, 5);
 }
