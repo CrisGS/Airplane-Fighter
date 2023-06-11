@@ -58,6 +58,8 @@ body {
   display: flex;
   width: fit-content;
   margin: auto auto auto auto;
+  font-family: arcade;
+  font-size: 11px;
 }
 
 button.pointer {
@@ -70,10 +72,16 @@ button.pointer {
   justify-content: space-between;
   height: 600px;
   width: fit-content;
-  background: url(background.jpg) center no-repeat;
-  background-size: cover;
+  background: url(background.jpg) center repeat-y;
   border-radius: 10px;
   box-shadow: 0px 0px 500px 100px rgb(24 31 122);
+  animation: scroll 150s linear infinite;
+}
+
+@keyframes scroll {
+  100% {
+    background-position: 0% -400%;
+  }
 }
 
 .buttons {
@@ -97,7 +105,7 @@ button.pointer {
   left: 100px;
   top: 390px;
   width: 80px;
-  height: 70px;
+  height: 100px;
   background: url(airplane.png) center no-repeat;
   background-size:cover;
   margin-bottom: 10px;
@@ -110,5 +118,5 @@ button.pointer {
   height: 80px;
   background: center no-repeat;
   background-size:cover;
-  filter: drop-shadow(0 0 1rem rgb(114, 113, 113));
+  filter: drop-shadow(0 0 5px rgb(114, 113, 113));
 }

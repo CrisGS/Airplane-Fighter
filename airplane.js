@@ -86,16 +86,6 @@ function checkColision(x) {
   }
 }
 
-function asteroidFall(imgId) {
-  fallingInterval = setInterval(() => {
-    document.getElementById(imgId).style.top = parseInt(document.getElementById(imgId).style.top) + 2 + 'px';
-    checkColision(imgId);
-    if (parseInt(document.getElementById(imgId).style.top) > 450) {
-      document.getElementById(imgId).remove();
-    }
-  }, 5);
-}
-
 function move(e) {
   if (gameOver === false) {
     if (e.keyCode == 37 && parseInt(airplanePosition.style.left) > 0) {
