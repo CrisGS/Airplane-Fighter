@@ -75,7 +75,7 @@ function displayScore() {
 
 function checkColision(x) {
   let asteroidVerticalPosition = parseInt(document.getElementById(x).style.top);
-  if (asteroidVerticalPosition === 318) {
+  if (asteroidVerticalPosition >= 318) {
     if (parseInt(document.getElementById('airplane').style.left) === parseInt(document.getElementById(x).style.left) - 10) {
       clearInterval(generateInterval);
       clearInterval(myInterval);
