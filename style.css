@@ -10,18 +10,24 @@ h1 {
   color: antiquewhite;
   font-family: arcade;
   font-size:x-large;
+  text-shadow: #333a99 0px 0px 5px, #333a99 0px 0px 10px, #333a99 0px 0px 15px, #333a99 0px 0px 20px, #333a99 0px 0px 30px, #333a99 0px 0px 40px, #333a99 0px 0px 50px, #333a99 0px 0px 75px;
 }
 
 .gameOver {
-  width: 250px;
-  height: 100px;
+  font-family: arcade;
+  font-size: x-large;
+  text-align: center;
+  color: #ffffff;
+  font-weight: 900;
+  text-shadow: #fe0000 0px 0px 5px, #fe0000 0px 0px 10px, #fe0000 0px 0px 15px, #fe0000 0px 0px 20px, #fe0000 0px 0px 30px, #fe0000 0px 0px 40px, #fe0000 0px 0px 50px, #fe0000 0px 0px 75px;
 }
 
 .score {
   font-family: arcade;
-  font-size: small;
-  color: #7d78ad;
+  font-size:medium;
+  color: #ffffff;
   font-weight: bolder;
+  text-shadow: #fe0000 0px 0px 5px, #fe0000 0px 0px 10px, #fe0000 0px 0px 15px, #fe0000 0px 0px 20px, #fe0000 0px 0px 30px, #fe0000 0px 0px 40px, #fe0000 0px 0px 50px, #fe0000 0px 0px 75px;
 }
 
 .messageContainer {
@@ -67,10 +73,7 @@ button.pointer {
   background: url(background.jpg) center no-repeat;
   background-size: cover;
   border-radius: 10px;
-  box-shadow: 15px 15px 30px rgb(24, 25, 60),
-            -15px -15px 30px rgb(24, 25, 60),
-            15px 15px 30px rgb(24, 25, 60),
-            -15px -15px 30px rgb(24, 25, 60);
+  box-shadow: 0px 0px 500px 100px rgb(24 31 122);
 }
 
 .buttons {
@@ -86,6 +89,7 @@ button.pointer {
   width: 300px;
   height: 500px;
   overflow: hidden;
+  border-radius: 10px;
 }
 
 .airplane {
@@ -106,4 +110,5 @@ button.pointer {
   height: 80px;
   background: center no-repeat;
   background-size:cover;
+  filter: drop-shadow(0 0 1rem rgb(114, 113, 113));
 }
