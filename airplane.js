@@ -88,6 +88,7 @@ function checkColision(x) {
 
 function move(e) {
   if (gameOver === false) {
+    document.getElementById("play").blur();
     if (e.keyCode == 37 && parseInt(airplanePosition.style.left) > 0) {
       airplanePosition.style.left = parseInt(airplanePosition.style.left) - 100 + 'px';
     } else if (e.keyCode == 39 && parseInt(airplanePosition.style.left) < 200) {
