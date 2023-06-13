@@ -1,5 +1,5 @@
 let seconds = 0, stepMove = 100, asteroidId = 0, obstacle, gameOver = false, alreadyPressed = false, displayTimes = 0;
-let horizontalPositions = [10, 110, 210], xPos, airplanePosition, myInterval, generateInterval;
+let horizontalPositions = [10, 110, 210], xPos, airplanePosition, myInterval, generateInterval, obstaclesAvoided = 0;
 
 function startGame() {
   if (gameOver === false && alreadyPressed === false) {
@@ -32,6 +32,10 @@ class Obstacles {
       document.getElementById(this.ids).style.top = parseInt(document.getElementById(this.ids).style.top) + 1 + 'px';
       checkColision(this.ids);
       if (parseInt(document.getElementById(this.ids).style.top) === 500) {
+        ++obstaclesAvoided;
+        /*if (gameOver === false) {
+          document.getElementById('score').innerText = obstaclesAvoided;
+        }*/
         clearInterval(fallingInterval);
         document.getElementById(this.ids).remove();
       }
@@ -65,11 +69,11 @@ function displayScore() {
     let score = document.createElement('span');
     score.classList.add('score');
     score.id = 'score';
-    score.innerText = "Your score: " + seconds;
+    score.innerText = "Your score: " + obstaclesAvoided;
     divElement.appendChild(gameOver);
     divElement.appendChild(score);
     document.getElementById("table-game").appendChild(divElement);
-    document.getElementById("table-game").style.boxShadow = "inset 0px 0px 25px 5px red"
+    document.getElementById("table-game").style.boxShadow = "inset 0px 0px 25px 5px red";
   }
 }
 

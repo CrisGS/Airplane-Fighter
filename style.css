@@ -22,6 +22,10 @@ h1 {
   text-shadow: #fe0000 0px 0px 5px, #fe0000 0px 0px 10px, #fe0000 0px 0px 15px, #fe0000 0px 0px 20px, #fe0000 0px 0px 30px, #fe0000 0px 0px 40px, #fe0000 0px 0px 50px, #fe0000 0px 0px 75px;
 }
 
+.panel {
+  display: inline-flex; 
+}
+
 .score {
   font-family: arcade;
   font-size:medium;
@@ -29,6 +33,19 @@ h1 {
   font-weight: bolder;
   text-shadow: #fe0000 0px 0px 5px, #fe0000 0px 0px 10px, #fe0000 0px 0px 15px, #fe0000 0px 0px 20px, #fe0000 0px 0px 30px, #fe0000 0px 0px 40px, #fe0000 0px 0px 50px, #fe0000 0px 0px 75px;
 }
+
+/*.scoreTable {
+  display: flex;
+  font-size: small;
+  color: #ffffff;
+  width: 100px;
+  height: fit-content;
+  margin: 5px auto 5px 0;
+  justify-content: space-between;
+  font-family: arcade;
+  font-weight: bolder;
+  text-shadow: white 0px 0px 5px, white 0px 0px 10px, white 0px 0px 15px, white 0px 0px 20px, white 0px 0px 30px, white 0px 0px 40px, white 0px 0px 50px, white 0px 0px 75px;
+}*/
 
 .messageContainer {
   display: flex;
