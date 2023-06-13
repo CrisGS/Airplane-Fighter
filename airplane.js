@@ -1,11 +1,11 @@
 let seconds = 0, stepMove = 100, asteroidId = 0, obstacle, gameOver = false, alreadyPressed = false, displayTimes = 0;
-let horizontalPositions = [10, 110, 210], airplanePosition, myInterval, generateInterval;
+let horizontalPositions = [10, 110, 210], xPos, airplanePosition, myInterval, generateInterval;
 
 function startGame() {
   if (gameOver === false && alreadyPressed === false) {
     timer();
     generateAirplane();
-    generateInterval = setInterval(generateObstacles, 700);
+    generateInterval = setInterval(generateObstacles, 1200);
     document.onkeydown = move;
     alreadyPressed = true;
   }
@@ -75,7 +75,7 @@ function displayScore() {
 
 function checkColision(x) {
   let asteroidVerticalPosition = parseInt(document.getElementById(x).style.top);
-  if (asteroidVerticalPosition >= 318) {
+  if (asteroidVerticalPosition >= 330) {
     if (parseInt(document.getElementById('airplane').style.left) === parseInt(document.getElementById(x).style.left) - 10) {
       clearInterval(generateInterval);
       clearInterval(myInterval);
