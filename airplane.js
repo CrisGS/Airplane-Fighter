@@ -1,9 +1,9 @@
 let seconds = 0, stepMove = 100, asteroidId = 0, obstacle, gameOver = false, alreadyPressed = false, displayTimes = 0;
 let horizontalPositions = [10, 110, 210], xPos, airplanePosition, myInterval, generateInterval, obstaclesAvoided = 0;
+let mousePosition, offset = [0,0], div, isDown = false;
 
 function startGame() {
   if (gameOver === false && alreadyPressed === false) {
-    timer();
     generateAirplane();
     generateInterval = setInterval(generateObstacles, 1200);
     document.onkeydown = move;
@@ -30,12 +30,13 @@ class Obstacles {
   falling() {
     let fallingInterval = setInterval(() => {
       document.getElementById(this.ids).style.top = parseInt(document.getElementById(this.ids).style.top) + 1 + 'px';
-      checkColision(this.ids);
+      const obstaclePosition = document.getElementById(this.ids).getBoundingClientRect();
+      checkCollision(obstaclePosition);
+      if (gameOver === false) {
+        document.getElementById('score').innerText = obstaclesAvoided;
+      }
       if (parseInt(document.getElementById(this.ids).style.top) === 500) {
         ++obstaclesAvoided;
-        /*if (gameOver === false) {
-          document.getElementById('score').innerText = obstaclesAvoided;
-        }*/
         clearInterval(fallingInterval);
         document.getElementById(this.ids).remove();
       }
@@ -77,19 +78,6 @@ function displayScore() {
   }
 }
 
-function checkColision(x) {
-  let asteroidVerticalPosition = parseInt(document.getElementById(x).style.top);
-  if (asteroidVerticalPosition >= 330) {
-    if (parseInt(document.getElementById('airplane').style.left) === parseInt(document.getElementById(x).style.left) - 10) {
-      clearInterval(generateInterval);
-      clearInterval(myInterval);
-      ++displayTimes;
-      displayScore();
-      gameOver = true;
-    }
-  }
-}
-
 function move(e) {
   if (gameOver === false) {
     document.getElementById("play").blur();
@@ -101,17 +89,20 @@ function move(e) {
   }
 }
 
-function timer() {
-  let elapsedTime;
-  myInterval = setInterval(() => {
-    ++seconds;
-    if (seconds < 10) {
-      elapsedTime = '00' + seconds;
-    } else if (seconds < 100) {
-      elapsedTime = '0' + seconds;
-    }
-    document.getElementById('time').innerText = elapsedTime;
-  }, 1000);
+function checkCollision(asteroidPosition) {
+  const airplanePosition = document.getElementById('airplane').getBoundingClientRect();
+  const asteroidLeft = asteroidPosition.left;
+  const asteroidRight = asteroidPosition.right;
+  const asteroidTop = asteroidPosition.top;
+  const asteroidBottom = asteroidPosition.bottom;
+  if (airplanePosition.right > asteroidLeft && airplanePosition.left < asteroidRight &&
+    airplanePosition.bottom > asteroidTop && airplanePosition.top < asteroidBottom) {
+    clearInterval(generateInterval);
+    clearInterval(myInterval);
+    ++displayTimes;
+    displayScore();
+    gameOver = true;
+  }
 }
 
 function resetGame() {
