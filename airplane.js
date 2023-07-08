@@ -1,10 +1,12 @@
 let seconds = 0, stepMove = 100, asteroidId = 0, obstacle, gameOver = false, alreadyPressed = false, displayTimes = 0;
-let horizontalPositions = [10, 110, 210], xPos, airplanePosition, myInterval, generateInterval, obstaclesAvoided = 0;
+let horizontalPositions = [15, 115, 215], xPos, airplanePosition, myInterval, generateInterval, obstaclesAvoided = 0;
 let mousePosition, offset = [0,0], div, isDown = false;
+let bulletsId = 0, playerPosition;
 
 function startGame() {
   if (gameOver === false && alreadyPressed === false) {
     generateAirplane();
+    bullet.generate();
     generateInterval = setInterval(generateObstacles, 1200);
     document.onkeydown = move;
     alreadyPressed = true;
@@ -51,6 +53,12 @@ function generateAirplane() {
   document.getElementById("table-game").appendChild(airplane);
   airplanePosition = document.getElementById("airplane");
   airplanePosition.style.left = "100px";
+  let torch = document.createElement('img');
+  torch.src = 'fire.png';
+  torch.classList.add('bullets');
+  torch.style.top = '75px';
+  torch.style.left = '25px';
+  document.getElementById('airplane').appendChild(torch);
 }
 
 function generateObstacles() {
