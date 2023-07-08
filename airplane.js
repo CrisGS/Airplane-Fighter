@@ -1,12 +1,10 @@
 let seconds = 0, stepMove = 100, asteroidId = 0, obstacle, gameOver = false, alreadyPressed = false, displayTimes = 0;
 let horizontalPositions = [15, 115, 215], xPos, airplanePosition, myInterval, generateInterval, obstaclesAvoided = 0;
 let mousePosition, offset = [0,0], div, isDown = false;
-let bulletsId = 0, playerPosition;
 
 function startGame() {
   if (gameOver === false && alreadyPressed === false) {
     generateAirplane();
-    bullet.generate();
     generateInterval = setInterval(generateObstacles, 1200);
     document.onkeydown = move;
     alreadyPressed = true;
