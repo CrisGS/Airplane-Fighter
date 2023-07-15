@@ -122,17 +122,18 @@ body {
   margin-bottom: 10px;
 }
 
-#airplane img[src='airplane.png'] {
+.bullets {
+  display: flex;
+  justify-items: center;
   position: absolute;
+  width: 10px;
+  height: 30px;
 }
 
-.bullets {
+.torch {
   position: relative;
   width: 10px;
   height: 30px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
 }
 
 .asteroid {
@@ -142,5 +143,7 @@ body {
   height: 50px;
   background: center no-repeat;
   background-size:cover;
+  text-align: center;
+  color: #fe0000;
   filter: drop-shadow(0 0 5px rgb(114, 113, 113));
 }

@@ -1,6 +1,8 @@
 let seconds = 0, stepMove = 100, asteroidId = 0, obstacle, gameOver = false, alreadyPressed = false, displayTimes = 0;
-let horizontalPositions = [15, 115, 215], xPos, airplanePosition, myInterval, generateInterval, obstaclesAvoided = 0;
+let horizontalPositions = [15, 115, 215], xPos, airplanePosition, myInterval, generateInterval, autoShoot, obstaclesAvoided = 0;
 let mousePosition, offset = [0,0], div, isDown = false;
+let bulletsId, number = 0;
+
 
 function startGame() {
   if (gameOver === false && alreadyPressed === false) {
@@ -11,10 +13,63 @@ function startGame() {
   }
 }
 
+class Bullets {
+  constructor(ids){
+    this.ids = ids;
+  }
+
+  getYpos() {
+    return Math.floor(document.getElementById(this.id).getBoundingClientRect().top);
+  }
+
+  generateBullets() {
+    let bullet = document.createElement('img');
+    bullet.src ='fire.png';
+    bullet.id = this.ids;
+    bullet.classList.add('bullet');
+    bullet.style.top = '0px';
+    bullet.style.left = '25px';
+    bullet.setAttribute('class', 'bullets');
+    document.getElementById("airplane").appendChild(bullet);
+  }
+
+
+
+  fly() {
+    let movingInterval = setInterval(() => {
+      document.getElementById(this.ids).style.top = parseInt(document.getElementById(this.ids).style.top) - 2 + 'px';
+      if(parseInt(document.getElementById(this.ids).style.top) < -400) {
+        clearInterval(movingInterval);
+        document.getElementById(this.ids).remove();
+        if(gameOver === true) {
+          clearInterval(autoShoot);
+        }
+      }
+    }, 10);
+  }
+}
+
+function shoot() {
+  bulletsId = 'b' + number;
+  let bullet = new Bullets(bulletsId);
+  bullet.generateBullets();
+  bullet.fly();
+  ++number;
+}
+
 class Obstacles {
     
 	constructor(ids) {
   	this.ids = ids;
+    this.lifePoints = 100;
+  }
+
+  lifeRemains() {
+    return this.lifePoints;
+  }
+
+  getYpos() {
+    return Math.floor(document.getElementById(this.ids).getBoundingClientRect().bottom);
   }
   
   addObstacle() {
@@ -53,10 +108,11 @@ function generateAirplane() {
   airplanePosition.style.left = "100px";
   let torch = document.createElement('img');
   torch.src = 'fire.png';
-  torch.classList.add('bullets');
+  torch.classList.add('torch');
   torch.style.top = '75px';
   torch.style.left = '25px';
   document.getElementById('airplane').appendChild(torch);
+  autoShoot = setInterval(shoot, 300);
 }
 
 function generateObstacles() {
