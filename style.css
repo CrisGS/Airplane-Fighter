@@ -4,6 +4,10 @@
   text-align: center;
 }
 
+body {
+  user-select: none;
+}
+
 h1 {
   text-align: center;
   margin: 20px;
