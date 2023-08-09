@@ -2,6 +2,7 @@ let seconds = 0, stepMove = 100, asteroidId = 0, obstacle, gameOver = false, alr
 let horizontalPositions = [15, 115, 215], xPos, airplanePosition, myInterval, generateInterval, autoShoot, obstaclesAvoided = 0;
 let mousePosition, offset = [0,0], div, isDown = false;
 let bulletsId, number = 0;
+let bulletsArray = [];
 
 
 function startGame() {
@@ -33,45 +34,38 @@ class Bullets {
     document.getElementById("airplane").appendChild(bullet);
   }
 
-
-
   fly() {
     let movingInterval = setInterval(() => {
-      document.getElementById(this.ids).style.top = parseInt(document.getElementById(this.ids).style.top) - 2 + 'px';
-      if(parseInt(document.getElementById(this.ids).style.top) < -400) {
-        clearInterval(movingInterval);
-        document.getElementById(this.ids).remove();
+      if (document.getElementById(this.ids) != null) {
+        document.getElementById(this.ids).style.top = parseInt(document.getElementById(this.ids).style.top) - 2 + 'px';
+      }
+      //if(parseInt(document.getElementById(this.ids).style.top) < -400) {
+        //clearInterval(movingInterval);
+        //bulletsArray.shift();
+        //document.getElementById(this.ids).remove();
         if(gameOver === true) {
           clearInterval(autoShoot);
         }
-      }
+      //}
     }, 10);
   }
 }
 
 function shoot() {
   bulletsId = 'b' + number;
-  let bullet = new Bullets(bulletsId);
-  bullet.generateBullets();
-  bullet.fly();
+  let newBullet = new Bullets(bulletsId);
+  newBullet.generateBullets();
+  bulletsArray.push(newBullet);
+  newBullet.fly();
   ++number;
 }
 
 class Obstacles {
-    
 	constructor(ids) {
   	this.ids = ids;
-    this.lifePoints = 100;
+    this.lifePoints = 5;
   }
-
-  lifeRemains() {
-    return this.lifePoints;
-  }
-
-  getYpos() {
-    return Math.floor(document.getElementById(this.ids).getBoundingClientRect().bottom);
-  }
-  
+   
   addObstacle() {
   	obstacle = document.createElement('img');
     obstacle.src = 'asteroid.png';
@@ -90,12 +84,22 @@ class Obstacles {
       if (gameOver === false) {
         document.getElementById('score').innerText = obstaclesAvoided;
       }
-      if (parseInt(document.getElementById(this.ids).style.top) === 500) {
-        ++obstaclesAvoided;
-        clearInterval(fallingInterval);
-        document.getElementById(this.ids).remove();
+      if (checkBulletsCollision(obstaclePosition) === true) {
+        this.lifePoints -= 1;
+        console.log(this.lifePoints)
+        if (this.lifePoints < 0) {
+          ++obstaclesAvoided;
+          clearInterval(fallingInterval);
+          document.getElementById(this.ids).remove();
+        }
       }
-    }, 5);
+      if(document.getElementById(this.ids) != null) {
+        if (parseInt(document.getElementById(this.ids).style.top) === 500) {
+          clearInterval(fallingInterval);
+          document.getElementById(this.ids).remove();
+        }
+      }
+    }, 7);
   }
 }
 
@@ -165,6 +169,27 @@ function checkCollision(asteroidPosition) {
     displayScore();
     gameOver = true;
   }
+}
+
+function checkBulletsCollision(asteroidPosition) {
+  let hited = false;
+  bulletsArray.forEach((bulletObject) => {
+    if (document.getElementById(bulletObject.ids) != null) {
+      const bulletCurrentPosition = document.getElementById(bulletObject.ids).getBoundingClientRect();
+      if (asteroidPosition.bottom > bulletCurrentPosition.top && 
+        asteroidPosition.top < bulletCurrentPosition.bottom && 
+        asteroidPosition.right > bulletCurrentPosition.left &&
+        asteroidPosition.left < bulletCurrentPosition.right) {
+          hited = true;
+          document.getElementById(bulletObject.ids).remove();
+          bulletsArray.shift();
+      } else if(parseInt(document.getElementById(bulletObject.ids).style.top) < -400) {
+        document.getElementById(bulletObject.ids).remove();
+        bulletsArray.shift();
+      }
+    }
+  });
+  return hited;
 }
 
 function resetGame() {
