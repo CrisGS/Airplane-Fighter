@@ -1,9 +1,6 @@
-let seconds = 0, stepMove = 100, asteroidId = 0, obstacle, gameOver = false, alreadyPressed = false, displayTimes = 0;
-let horizontalPositions = [15, 115, 215], xPos, airplanePosition, myInterval, generateInterval, autoShoot, obstaclesAvoided = 0;
-let mousePosition, offset = [0,0], div, isDown = false;
+let seconds = 0, asteroidId = 0, obstacle, gameOver = false, alreadyPressed = false, displayTimes = 0, obstaclesDestroyed = 0;
+let horizontalPositions = [15, 115, 215], bulletsArray = [], airplanePosition, myInterval, generateInterval, autoShoot;
 let bulletsId, number = 0;
-let bulletsArray = [];
-
 
 function startGame() {
   if (gameOver === false && alreadyPressed === false) {
@@ -39,14 +36,9 @@ class Bullets {
       if (document.getElementById(this.ids) != null) {
         document.getElementById(this.ids).style.top = parseInt(document.getElementById(this.ids).style.top) - 2 + 'px';
       }
-      //if(parseInt(document.getElementById(this.ids).style.top) < -400) {
-        //clearInterval(movingInterval);
-        //bulletsArray.shift();
-        //document.getElementById(this.ids).remove();
-        if(gameOver === true) {
-          clearInterval(autoShoot);
-        }
-      //}
+      if(gameOver === true) {
+        clearInterval(autoShoot);
+      }
     }, 10);
   }
 }
@@ -82,13 +74,12 @@ class Obstacles {
       const obstaclePosition = document.getElementById(this.ids).getBoundingClientRect();
       checkCollision(obstaclePosition);
       if (gameOver === false) {
-        document.getElementById('score').innerText = obstaclesAvoided;
+        document.getElementById('score').innerText = obstaclesDestroyed;
       }
       if (checkBulletsCollision(obstaclePosition) === true) {
         this.lifePoints -= 1;
-        console.log(this.lifePoints)
         if (this.lifePoints < 0) {
-          ++obstaclesAvoided;
+          ++obstaclesDestroyed;
           clearInterval(fallingInterval);
           document.getElementById(this.ids).remove();
         }
@@ -136,7 +127,7 @@ function displayScore() {
     let score = document.createElement('span');
     score.classList.add('score');
     score.id = 'score';
-    score.innerText = "Your score: " + obstaclesAvoided;
+    score.innerText = "Your score: " + obstaclesDestroyed;
     divElement.appendChild(gameOver);
     divElement.appendChild(score);
     document.getElementById("table-game").appendChild(divElement);
@@ -145,12 +136,13 @@ function displayScore() {
 }
 
 function move(e) {
+  const stepMove = 100;
   if (gameOver === false) {
     document.getElementById("play").blur();
     if (e.keyCode == 37 && parseInt(airplanePosition.style.left) > 0) {
-      airplanePosition.style.left = parseInt(airplanePosition.style.left) - 100 + 'px';
+      airplanePosition.style.left = parseInt(airplanePosition.style.left) - stepMove + 'px';
     } else if (e.keyCode == 39 && parseInt(airplanePosition.style.left) < 200) {
-      airplanePosition.style.left = parseInt(airplanePosition.style.left) + 100 + 'px';
+      airplanePosition.style.left = parseInt(airplanePosition.style.left) + stepMove + 'px';
     }
   }
 }
