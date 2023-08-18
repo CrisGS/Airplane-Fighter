@@ -1,5 +1,5 @@
 let seconds = 0, asteroidId = 0, obstacle, gameOver = false, alreadyPressed = false, displayTimes = 0, obstaclesDestroyed = 0;
-let horizontalPositions = [15, 115, 215], bulletsArray = [], airplanePosition, myInterval, generateInterval, autoShoot;
+let bulletsArray = [], airplanePosition, myInterval, generateInterval, autoShoot;
 let bulletsId, number = 0;
 
 class Bullets {
@@ -20,7 +20,7 @@ class Bullets {
   }
 
   fly() {
-    let movingInterval = setInterval(() => {
+    setInterval(() => {
       if (document.getElementById(this.ids) != null) {
         document.getElementById(this.ids).style.top = parseInt(document.getElementById(this.ids).style.top) - 2 + 'px';
       }
@@ -39,6 +39,7 @@ class Obstacles {
   }
    
   addObstacle() {
+    const horizontalPositions = [15, 115, 215];
   	obstacle = document.createElement('img');
     obstacle.src = 'asteroid.png';
     obstacle.id = this.ids;
@@ -52,7 +53,7 @@ class Obstacles {
     let fallingInterval = setInterval(() => {
       document.getElementById(this.ids).style.top = parseInt(document.getElementById(this.ids).style.top) + 1 + 'px';
       const obstaclePosition = document.getElementById(this.ids).getBoundingClientRect();
-      checkCollision(obstaclePosition);
+      checkAirplaneCollision(obstaclePosition);
       if (gameOver === false) {
         document.getElementById('score').innerText = obstaclesDestroyed;
       }
@@ -136,7 +137,7 @@ function move(e) {
   }
 }
 
-function checkCollision(asteroidPosition) {
+function checkAirplaneCollision(asteroidPosition) {
   const airplanePosition = document.getElementById('airplane').getBoundingClientRect();
   const asteroidLeft = asteroidPosition.left;
   const asteroidRight = asteroidPosition.right;
