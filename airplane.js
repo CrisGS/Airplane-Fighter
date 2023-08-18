@@ -2,22 +2,10 @@ let seconds = 0, asteroidId = 0, obstacle, gameOver = false, alreadyPressed = fa
 let horizontalPositions = [15, 115, 215], bulletsArray = [], airplanePosition, myInterval, generateInterval, autoShoot;
 let bulletsId, number = 0;
 
-function startGame() {
-  if (gameOver === false && alreadyPressed === false) {
-    generateAirplane();
-    generateInterval = setInterval(generateObstacles, 1200);
-    document.onkeydown = move;
-    alreadyPressed = true;
-  }
-}
-
 class Bullets {
+
   constructor(ids){
     this.ids = ids;
-  }
-
-  getYpos() {
-    return Math.floor(document.getElementById(this.id).getBoundingClientRect().top);
   }
 
   generateBullets() {
@@ -43,16 +31,8 @@ class Bullets {
   }
 }
 
-function shoot() {
-  bulletsId = 'b' + number;
-  let newBullet = new Bullets(bulletsId);
-  newBullet.generateBullets();
-  bulletsArray.push(newBullet);
-  newBullet.fly();
-  ++number;
-}
-
 class Obstacles {
+
 	constructor(ids) {
   	this.ids = ids;
     this.lifePoints = 5;
@@ -115,6 +95,15 @@ function generateObstacles() {
   asteroid.addObstacle();
   asteroid.falling();
   ++asteroidId;
+}
+
+function shoot() {
+  bulletsId = 'b' + number;
+  let newBullet = new Bullets(bulletsId);
+  newBullet.generateBullets();
+  bulletsArray.push(newBullet);
+  newBullet.fly();
+  ++number;
 }
 
 function displayScore() {
@@ -182,6 +171,15 @@ function checkBulletsCollision(asteroidPosition) {
     }
   });
   return hited;
+}
+
+function startGame() {
+  if (gameOver === false && alreadyPressed === false) {
+    generateAirplane();
+    generateInterval = setInterval(generateObstacles, 1200);
+    document.onkeydown = move;
+    alreadyPressed = true;
+  }
 }
 
 function resetGame() {
